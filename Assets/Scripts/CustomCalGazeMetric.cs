@@ -64,6 +64,9 @@ namespace GazeMetrics
         private RenderController renderControl;
         private string dataOutputDir;
         private string experimentID;
+        // for button press
+        private MessageController messageController;
+        GameObject ThirdPressCanvas;
 
 
         private bool finished_calibration = false;
@@ -90,16 +93,11 @@ namespace GazeMetrics
 
 
             mainControl = FindObjectOfType<MainController>();
+            ThirdPressCanvas = GameObject.Find("ThirdPressHomeCanvas");
             if (mainControl == null)
             {
                 Debug.LogError("Can not get a valid object of MainController!");
             }
-
-            //renderControl = FindObjectOfType<RenderController>();
-            //if (renderControl == null)
-            //{
-            //    Debug.LogError("Can not get a valid object of RenderController!");
-            //}
 
 
             if (!SRanipal_Eye_Framework.Instance.EnableEye)
@@ -284,13 +282,15 @@ namespace GazeMetrics
             //added by xuemei 2023.3.8
             SetPreviewMarkers(false);
             FinishedCalibrating();
+            // added the third press button
+            ThirdPressCanvas.SetActive(true);
+            //messageController = FindObjectOfType<MessageController>();
+            //messageController.ShowMessage("(Calibration Scene)\nNow press the Trackpad Button!");
 
             if (OnCalibrationRoutineDone != null)
             {
                 OnCalibrationRoutineDone();
             }
-
-            //subsCtrl.OnDisconnecting -= StopCalibration;
         }
 
         void OnApplicationQuit()

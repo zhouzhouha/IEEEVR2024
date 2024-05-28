@@ -17,11 +17,8 @@ public class MainController : MonoBehaviour
     private CustomCalGazeMetric cusGazeMetricController;
     private PointCloudPlayback pointcloudPlayback;
     GameObject NextPointCloudHelper;
-
-    //[Tooltip("The reader for the pointclouds for which we get gaze data")]
-    //public PrerecordedPointCloudReader pcdReader;
-    ////public PointCloudRenderer pcdRender;
-
+    GameObject PressTriggerCanvas;
+    GameObject ThirdPressCanvas;
 
 
     [Header("Experiment setting")]
@@ -73,6 +70,8 @@ public class MainController : MonoBehaviour
         cusGazeMetricController = FindObjectOfType<CustomCalGazeMetric>();
         pointcloudPlayback = FindObjectOfType<PointCloudPlayback>();
         NextPointCloudHelper = GameObject.Find("ShowingNextPointCloud");
+        PressTriggerCanvas = GameObject.Find("SecondPressTriggerCanvas");
+        ThirdPressCanvas = GameObject.Find("ThirdPressHomeCanvas");
 
         //// TODO
         if ( ratingController == null || cusGazeMetricController == null || pointcloudPlayback == null)
@@ -86,11 +85,8 @@ public class MainController : MonoBehaviour
         ratingController.gameObject.SetActive(false);
         cusGazeMetricController.gameObject.SetActive(false);
         NextPointCloudHelper.SetActive(false);
-
-        //Debug.Log("The first path is :" + renderController.pcdReader.dirName); //already checked
-        //Debug.Log("pointcloudPlayback is " + pointcloudPlayback.gameObject.activeSelf); //already checked true!
-        //Debug.Log("Now is playback:" + pointcloudPlayback.dirName);    //already checked
-        //pointcloudPlayback.RendererStarted();
+        PressTriggerCanvas.SetActive(false);
+        ThirdPressCanvas.SetActive(false);
 
     }
 
@@ -105,9 +101,6 @@ public class MainController : MonoBehaviour
         
         if ( pointcloudPlayback.isRenderFinished && flag == 0)  // the number of loops has been played 
         {
-            //    ratingController.gameObject.SetActive(true);
-            //    cusGazeMetricController.gameObject.SetActive(false);
-            //    renderController.SetRenderActive(false);  // OnDestroy call Stop then reader = null ;
             Debug.Log("Now flag is 0 and will disable playing the Point cloud!");
             flag = 1;
             pointcloudPlayback.isRenderFinished = false;
@@ -124,7 +117,6 @@ public class MainController : MonoBehaviour
             cusGazeMetricController.gameObject.SetActive(true);  // in this scene only user used the trigger, the eye-ball will show up
             Debug.Log("Now flag is 1 and from Rating to Error Profiling!");
             flag = 2;
-
         }
         // now: calib switch to next render
         // before switch to next render, need do the re-calibration
@@ -132,6 +124,7 @@ public class MainController : MonoBehaviour
         {
             if (cusGazeMetricController.Finished_calibration)
             {
+                ThirdPressCanvas.SetActive(false); // for the third button
                 // added by xuemei.zykk, 2022-1-5, need to do the calibration again
                 bool calibrationsucssful = SRanipal_Eye_v2.LaunchEyeCalibration();
                 while (!calibrationsucssful)

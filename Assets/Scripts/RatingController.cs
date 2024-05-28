@@ -23,10 +23,8 @@ public class RatingController : MonoBehaviour
     private string pc_id;
     private int pc_index; 
     public GameObject ButtonBad;
-    //public GameObject ButtonPoor;
-    //public GameObject ButtonFair;
-    //public GameObject ButtonGood;
-    //public GameObject ButtonExcellent;
+    //public GameObject secondPressTriggerCanvas;
+    //bool secondTriggerPressed = false;
 
 
     private bool isFinised = false;
@@ -48,10 +46,7 @@ public class RatingController : MonoBehaviour
         
 
         ButtonBad = GameObject.Find("ButtonBad");
-        //ButtonPoor = GameObject.Find("ButtonPoor");
-        //ButtonFair = GameObject.Find("ButtonFair");
-        //ButtonGood = GameObject.Find("ButtonGood");
-        //ButtonExcellent = GameObject.Find("ButtonExcellent");
+        //secondPressTriggerCanvas = GameObject.Find("SecondPressTrigger"); // Ensure this name matches the canvas in the hierarchy
 
     }
 
@@ -61,10 +56,6 @@ public class RatingController : MonoBehaviour
     {
         FinishedRating = false;
         ButtonBad.SetActive(true);
-        //ButtonPoor.SetActive(true);
-        //ButtonFair.SetActive(true);
-        //ButtonGood.SetActive(true);
-        //ButtonExcellent.SetActive(true);
     }
 
     //Deactivates the old FillRect and assigns a new one.
@@ -118,6 +109,18 @@ public class RatingController : MonoBehaviour
         }
 
     }
+    //public void Info2PressTrigger() // need to set this public to be called when click the button
+    //{
+    //    if (secondTriggerPressed)
+    //    {
+    //        secondTriggerPressed = false;
+    //    }
+    //    else 
+    //    {
+    //        secondPressTriggerCanvas.SetActive(secondTriggerPressed);
+
+    //    }
+    //}
 
 
 
